@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { Audio } from "react-loader-spinner";
+import { Triangle } from "react-loader-spinner";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       {loading && (
-        <Audio
+        <Triangle
           height="80"
           width="80"
           color="green"
