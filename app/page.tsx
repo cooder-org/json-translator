@@ -62,7 +62,8 @@ export default function Home() {
       },
       body: JSON.stringify(formData),
     });
-    let item = {id: (response as any).endpointId, typeName: formData.typeName, schema: formData.schema, prompt: formData.prompt};
+    const data = await response.json();
+    let item = {id: data.endpointId, typeName: formData.typeName, schema: formData.schema, prompt: formData.prompt};
     setEndpoints([...endpoints, item]);
     setLoading(false);
   };
