@@ -16,7 +16,3 @@ export async function POST(req: NextRequest) {
   const data = resp.success ? resp.data : { error: resp.message };
   return NextResponse.json(data);
 }
-
-export const config = {
-  runtime: 'edge'
-}
