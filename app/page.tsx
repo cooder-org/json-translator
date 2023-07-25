@@ -6,6 +6,7 @@ import { Triangle } from "react-loader-spinner";
 import {EndpointList} from "../components/endpoint"
 
 interface EndpointType {
+  id: string;
   typeName: string;
   schema: string;
   prompt: string;
@@ -61,7 +62,7 @@ export default function Home() {
       },
       body: JSON.stringify(formData),
     });
-    let item = {typeName: formData.typeName, schema: formData.schema, prompt: formData.prompt};
+    let item = {id: (response as any).endpointId, typeName: formData.typeName, schema: formData.schema, prompt: formData.prompt};
     setEndpoints([...endpoints, item]);
     setLoading(false);
   };
@@ -84,9 +85,10 @@ export default function Home() {
       )}
       <div className="sm:mx-auto sm:w-full">
         <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          translate the input of natural language into a specified structure
+          Translate the input of natural language into a specified structure
         </h2>
-        <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">将自然语言的输入提取为指定的结构</h2>
+        <h3 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">DO NOT USE IN PRODUCTION ENV</h3>
+        <h3 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">将自然语言的输入提取为指定的结构</h3>
       </div>
       <main className="flex flex-row items-center justify-between p-2">
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8">

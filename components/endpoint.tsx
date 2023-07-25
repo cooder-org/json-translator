@@ -4,7 +4,7 @@ export function EndpointList(props:any) {
   const { endpoints, onClickEndpoint } = props;
   return (
     <div className="p-2">
-      Endpoints:
+      <pre> Endpoints: {'You can also POST to /api/endpoint/[EndpointId] with BODY {"prompt": "..."} to get the result.'}</pre>
       <div className="flex flex-row">
         {endpoints.map((endpoint:any, index:number) => (
           <div className="max-w-sm rounded overflow-hidden shadow-lg hover:bg-gray-100" key={index} onClick={()=>onClickEndpoint(endpoint)}>
@@ -22,6 +22,7 @@ export function EndpointList(props:any) {
                   }}
                 />
               </div>
+              <div className="mt-2">EndpointId: {endpoint.id}</div>
             </div>
           </div>
         ))}
