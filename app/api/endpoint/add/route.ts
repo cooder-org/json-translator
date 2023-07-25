@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     id,
     schema,
     typeName,
-    input: prompt,
+    prompt,
   };
   const resp = await add(endpoint);
   console.log(resp);

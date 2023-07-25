@@ -62,7 +62,7 @@ export default function Home() {
   };
 
   const onClickEndpoint = async (endpoint) => {
-    setFormData({...formData, typeName: endpoint.typeName, schema: endpoint.schema});
+    setFormData({...formData, typeName: endpoint.typeName, schema: endpoint.schema, prompt: endpoint.prompt});
   };
 
 

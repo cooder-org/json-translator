@@ -12,7 +12,7 @@ export interface Endpoint {
   id: string;
   typeName: string;
   schema: string;
-  input: string;
+  prompt: string;
 }
 
 export async function list() {
@@ -28,20 +28,20 @@ export async function list() {
       id: row[0],
       typeName: row[1],
       schema: row[2],
-      input: row[3] || "",
+      prompt: row[3] || "",
     }));
   }
   return ret;
 }
 
 export async function add(record: Endpoint) {
-  const { id, typeName, schema, input } = record;
+  const { id, typeName, schema, prompt } = record;
   const response = await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.SHEET_ID,
     range: "endpoints",
     valueInputOption: "RAW",
     requestBody: {
-      values: [[id, typeName, schema, input]],
+      values: [[id, typeName, schema, prompt]],
     },
   });
   return response;
@@ -60,7 +60,7 @@ export async function get(id: string) {
       id: row[0],
       typeName: row[1],
       schema: row[2],
-      input: row[3] || "",
+      prompt: row[3] || "",
     }));
   }
   return ret.find((e) => e.id === id);
