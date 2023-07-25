@@ -6,6 +6,9 @@ Translate the input of natural language into a specified structure.
 
 - powered by [microsoft/TypeChat](https://github.com/microsoft/TypeChat)
 
+## Online Demo
+https://nts.cooder.org/
+
 ## Getting Started
 
 First, run the development server:
