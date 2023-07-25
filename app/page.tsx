@@ -5,9 +5,15 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import { Triangle } from "react-loader-spinner";
 import {EndpointList} from "../components/endpoint"
 
+interface EndpointType {
+  typeName: string;
+  schema: string;
+  prompt: string;
+}
+
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [endpoints, setEndpoints] = useState([]);
+  const [endpoints, setEndpoints] = useState<EndpointType[]>([]);
   const [formData, setFormData] = useState({
     typeName: "ShareOrNot",
     schema:
@@ -55,13 +61,12 @@ export default function Home() {
       },
       body: JSON.stringify(formData),
     });
-    let list = [...endpoints];
-    list.push(formData);
-    setEndpoints(list);
+    let item = {typeName: formData.typeName, schema: formData.schema, prompt: formData.prompt};
+    setEndpoints([...endpoints, item]);
     setLoading(false);
   };
 
-  const onClickEndpoint = async (endpoint) => {
+  const onClickEndpoint = async (endpoint: EndpointType) => {
     setFormData({...formData, typeName: endpoint.typeName, schema: endpoint.schema, prompt: endpoint.prompt});
   };
 
@@ -124,7 +129,6 @@ export default function Home() {
                     padding={15}
                     style={{
                       fontSize: 12,
-                      // backgroundColor: "#f5f5f5",
                       fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
                     }}
                   />
