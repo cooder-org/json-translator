@@ -2,6 +2,17 @@ import { google } from "googleapis";
 
 const sheets = google.sheets("v4");
 
+const client = async function() {
+  const auth = await google.auth.getClient({
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    credentials: {
+      client_email: process.env.GOOGLE_CLIENT_EMAIL,
+      private_key: process.env.GOOGLE_PRIVATE_KEY,
+    },
+  });
+  return auth;
+}
+
 export interface Endpoint {
   id: string;
   typeName: string;
@@ -10,9 +21,7 @@ export interface Endpoint {
 }
 
 export async function list() {
-  const auth = await google.auth.getClient({
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-  });
+  const auth = await client();
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range: "endpoints",
@@ -33,9 +42,7 @@ export async function list() {
 }
 
 export async function add(record: Endpoint) {
-  const auth = await google.auth.getClient({
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-  });
+  const auth = await client();
   const { id, typeName, schema, input } = record;
   const response = await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.SHEET_ID,
@@ -50,9 +57,7 @@ export async function add(record: Endpoint) {
 }
 
 export async function get(id: string) {
-  const auth = await google.auth.getClient({
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-  });
+  const auth = await client();
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range: "endpoints",
