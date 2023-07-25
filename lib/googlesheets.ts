@@ -1,17 +1,12 @@
 import { google } from "googleapis";
 
-const sheets = google.sheets("v4");
-
-const client = async function() {
-  const auth = await google.auth.getClient({
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-    credentials: {
-      client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY,
-    },
-  });
-  return auth;
-}
+const target = ["https://www.googleapis.com/auth/spreadsheets"];
+const jwt = new google.auth.JWT({
+  email: process.env.GOOGLE_CLIENT_EMAIL,
+  key: (process.env.GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
+  scopes: target,
+});
+const sheets = google.sheets({ version: "v4", auth: jwt });
 
 export interface Endpoint {
   id: string;
@@ -21,11 +16,9 @@ export interface Endpoint {
 }
 
 export async function list() {
-  const auth = await client();
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range: "endpoints",
-    auth,
   });
 
   let ret: Endpoint[] = [];
@@ -42,12 +35,10 @@ export async function list() {
 }
 
 export async function add(record: Endpoint) {
-  const auth = await client();
   const { id, typeName, schema, input } = record;
   const response = await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.SHEET_ID,
     range: "endpoints",
-    auth,
     valueInputOption: "RAW",
     requestBody: {
       values: [[id, typeName, schema, input]],
@@ -57,11 +48,9 @@ export async function add(record: Endpoint) {
 }
 
 export async function get(id: string) {
-  const auth = await client();
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range: "endpoints",
-    auth,
   });
 
   let ret: Endpoint[] = [];

@@ -6,5 +6,5 @@ import { list } from "../../../../lib/googlesheets";
 export async function POST(req: NextRequest) {
   const ret = await list();
 
-  return NextResponse.json({ list: ret });
+  return NextResponse.json({ success: true, data: ret });
 }

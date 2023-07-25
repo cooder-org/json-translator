@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { Triangle } from "react-loader-spinner";
+import {EndpointList} from "../components/endpoint"
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const [endpoints, setEndpoints] = useState([]);
   const [formData, setFormData] = useState({
     typeName: "ShareOrNot",
     schema:
@@ -13,6 +15,17 @@ export default function Home() {
     output: "",
     prompt: "https://github.com/shengxia/RWKV_Role_Playing_API 一个基于Flask实现的RWKV角色扮演API",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/endpoint/list", {
+        method: "POST",
+      });
+      const rsp = await response.json();
+      setEndpoints(rsp.data);
+    };
+    fetchData();
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -32,6 +45,26 @@ export default function Home() {
     setFormData((prevState) => ({ ...prevState, output: JSON.stringify(data, null, 2) }));
     setLoading(false);
   };
+
+  const onAddEndpoint = async () => {
+    setLoading(true);
+    const response = await fetch("/api/endpoint/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    let list = [...endpoints];
+    list.push(formData);
+    setEndpoints(list);
+    setLoading(false);
+  };
+
+  const onClickEndpoint = async (endpoint) => {
+    setFormData({...formData, typeName: endpoint.typeName, schema: endpoint.schema});
+  };
+
 
   return (
     <>
@@ -124,6 +157,15 @@ export default function Home() {
                   {loading ? "Translating（转换中）" : "Translate (转换)"}
                 </button>
               </div>
+
+              <div>
+                <button
+                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={onAddEndpoint}
+                >
+                  Add TO Endpoint
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -149,6 +191,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <EndpointList endpoints={endpoints} onClickEndpoint={onClickEndpoint}/>
     </>
   );
 }
