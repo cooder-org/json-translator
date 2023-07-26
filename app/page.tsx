@@ -131,8 +131,10 @@ export default function Home() {
                     }
                     padding={15}
                     style={{
+                      maxHeight: 300,
                       fontSize: 12,
                       fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                      overflow: "scroll",
                     }}
                   />
                 </div>
