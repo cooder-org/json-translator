@@ -11,7 +11,13 @@ https://nts.cooder.org/
 
 ## Getting Started
 
-First, run the development server:
+First, copy `.env.template` to `.env.local`, and set your environment variable(OpenAI API key、google sheets key...) in `.env.local`:
+
+```bash
+cp .env.template .env.local
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
