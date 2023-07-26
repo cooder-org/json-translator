@@ -189,11 +189,12 @@ export default function Home() {
                 value={formData.output || ""}
                 language="json"
                 padding={15}
-                minHeight={300}
+                minHeight={500}
                 style={{
                   fontSize: 12,
-                  // backgroundColor: "#f5f5f5",
+                  maxHeight: 500,
                   fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                  overflow: "scroll",
                 }}
               />
             </div>
