@@ -38,7 +38,7 @@ export async function POST(req: NextRequest, context: { params: { id: string } }
   const record = await getEndpoint(id);
 
   const { typeName, schema } = record;
-  const translator = createJsonTranslator(model, typeName, schema);
+  const translator = createJsonTranslator(model, schema, typeName);
   const resp = await translator.translate(prompt);
   const data = resp.success ? resp.data : { error: resp.message };
 

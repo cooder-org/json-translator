@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 
 function Container({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cn("flex items-center justify-center [&>div]:w-full", className)} {...props} />;
 }
 
 export default function Home() {
+  const { toast } = useToast();
   const [endpoints, setEndpoints] = useState([]);
 
   useEffect(() => {
@@ -19,6 +21,17 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => setEndpoints(data.data));
   }, []);
+
+  const copyToClipboard = (id: string, prompt: string) => {
+    const body = { prompt: prompt };
+    const currentHost = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "");
+    const curl = `curl -X 'POST' '${currentHost}/api/endpoint/${id}' \\\n -H 'Content-Type: application/json' \\\n -d '${JSON.stringify(body)}' `;
+    navigator.clipboard.writeText(curl);
+    toast({
+      title: "Copied to clipboard",
+      description: "The cURL command has been copied to your clipboard.",
+    });
+  };
 
   return (
     <div className="items-start justify-center gap-6 rounded-lg p-8">
@@ -50,9 +63,12 @@ export default function Home() {
                     />
                   </div>
                 </CardContent>
-                <CardFooter className="flex items-center justify-end">
-                  <Button asChild>
-                    <Link href={`/playground/?id=${endpoint.id}`}>Try</Link>
+                <CardFooter className="flex items-center justify-between">
+                  <Button variant="outline" className="w-[150px]" onClick={() => copyToClipboard(endpoint.id, endpoint.prompt)}>
+                    Copy as cURL
+                  </Button>
+                  <Button asChild className="w-[150px]">
+                    <Link href={`/playground/?id=${endpoint.id}`}>Try in playground</Link>
                   </Button>
                 </CardFooter>
               </Card>

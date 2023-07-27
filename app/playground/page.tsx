@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { Triangle } from "react-loader-spinner";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Home() {
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     typeName: "ShareOrNot",
@@ -58,7 +61,18 @@ export default function Home() {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    let item = {id: data.endpointId, typeName: formData.typeName, schema: formData.schema, prompt: formData.prompt};
+    if (data.success) {
+      toast({
+        title: "Success",
+        description: `Add endpoint success. id: ${data.endpointId}`,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: `Add endpoint error: ${data?.error?.code}`,
+      });
+    }
     setLoading(false);
   };
 
@@ -139,22 +153,23 @@ export default function Home() {
               </div>
 
               <div>
-                <button
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                <Button
+                  className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6"
                   onClick={onClick}
                   disabled={loading}
                 >
                   {loading ? "Translating（转换中）" : "Translate (转换)"}
-                </button>
+                </Button>
               </div>
 
               <div>
-                <button
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                <Button
+                  variant="outline"
+                  className="flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6"
                   onClick={onAddEndpoint}
                 >
                   Add TO Endpoint
-                </button>
+                </Button>
               </div>
             </div>
           </div>
