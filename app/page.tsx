@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { Triangle } from "react-loader-spinner";
-import {EndpointList} from "../components/endpoint"
+import { EndpointList } from "../components/endpoint"
 
 interface EndpointType {
   id: string;
@@ -117,7 +117,7 @@ export default function Home() {
                     Type Definition In TS （类型描述 Typescript）
                   </label>
                 </div>
-                <div className="mt-2">
+                <div className="mt-2 h-[300px] overflow-auto">
                   <CodeEditor
                     name="schema"
                     value={formData.schema || ""}
@@ -131,10 +131,8 @@ export default function Home() {
                     }
                     padding={15}
                     style={{
-                      maxHeight: 300,
                       fontSize: 12,
                       fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-                      overflow: "scroll",
                     }}
                   />
                 </div>
