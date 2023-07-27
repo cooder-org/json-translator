@@ -14,7 +14,7 @@ export default function Home() {
     schema:
       "// The following is a schema definition for determining whether a user wants to share a post or not:\n\nexport interface ShareOrNot {\n  isShare: boolean;\n  url: string;\n  comment: string;\n}",
     output: "",
-    prompt: "https://github.com/shengxia/RWKV_Role_Playing_API 一个基于Flask实现的RWKV角色扮演API",
+    prompt: "https://github.com/shengxia/RWKV_Role_Playing_API A Flask-based RWKV role-playing API",
   });
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function Home() {
             <div className="space-y-6">
               <div>
                 <label htmlFor="typeName" className="block text-sm font-medium leading-6 text-gray-900">
-                  Type Name（类型名称）
+                  Type Name
                 </label>
                 <div className="mt-2">
                   <input
@@ -110,7 +110,7 @@ export default function Home() {
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="schema" className="block text-sm font-medium leading-6 text-gray-900">
-                    Type Definition In TS （类型描述 Typescript）
+                    Type Definition In Typescript
                   </label>
                 </div>
                 <div className="mt-2 h-[300px] overflow-auto">
@@ -138,7 +138,7 @@ export default function Home() {
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="prompt" className="block text-sm font-medium leading-6 text-gray-900">
-                    Input（输入）
+                    Input
                   </label>
                 </div>
                 <div className="mt-2">
@@ -158,7 +158,7 @@ export default function Home() {
                   onClick={onClick}
                   disabled={loading}
                 >
-                  {loading ? "Translating（转换中）" : "Translate (转换)"}
+                  {loading ? "Translating" : "Translate"}
                 </Button>
               </div>
 
@@ -177,7 +177,7 @@ export default function Home() {
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div>
             <label htmlFor="output" className="block text-sm font-medium leading-6 text-gray-900">
-              Output（输出）
+              Output
             </label>
             <div className="mt-2">
               <CodeEditor

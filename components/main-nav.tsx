@@ -29,6 +29,12 @@ export function MainNav({
       >
         Playground
       </Link>
+      <Link
+        href="https://github.com/cooder-org/json-translator"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+      >
+        Github
+      </Link>
     </nav>
   )
 }
