@@ -11,13 +11,15 @@ https://nts.cooder.org/
 
 ## Getting Started
 
-First, copy `.env.template` to `.env.local`, and set your environment variable(OpenAI API key、google sheets key...) in `.env.local`:
+First, copy `.env.template` to `.env.local`, and set your environment variable(OpenAI API key...) in `.env.local`:
 
 ```bash
 cp .env.template .env.local
 ```
 
-Then, run the development server:
+Second, import the `conf/db/nts.sql` into your database.
+
+At last, run the development server:
 
 ```bash
 npm run dev
@@ -28,12 +30,6 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Deploy on Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcooder-org%2Fjson-translator&env=OPENAI_API_KEY&project-name=json-translator&repository-name=json-translator)
-
-
 
 ## API ENDPOINT
 
@@ -50,4 +46,12 @@ curl -X 'POST' \
   "prompt": "https://github.com/shengxia/RWKV_Role_Playing_API 一个基于Flask实现的RWKV角色扮演API"
 }'
 
+```
+
+- /api/endpoint/[id]
+
+```bash
+curl -X 'POST' 'http://127.0.0.1:3000/api/endpoint/2dafcb4800ec144356799d5f4da07f32' \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt": "it is very rainy outside"}'
 ```
