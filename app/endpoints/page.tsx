@@ -4,6 +4,7 @@ import { executeQuery } from "@/lib/db";
 async function getEndpints() {
   const query = "select * from endpoints";
   const resp = await executeQuery({ query });
+  console.log(resp);
   const data = (resp as any).map((r: any) => {
     return {
       id: r.type_id,
