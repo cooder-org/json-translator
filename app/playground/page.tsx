@@ -82,7 +82,7 @@ export default function Home() {
         <Triangle
           height="80"
           width="80"
-          color="green"
+          color="black"
           ariaLabel="loading"
           wrapperClass="fixed top-0 left-0 right-0 bottom-0 h-screen z-50 overflow-hidden bg-gray-100 opacity-75 block items-center justify-center"
         />
