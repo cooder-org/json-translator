@@ -51,3 +51,11 @@ curl -X 'POST' \
 }'
 
 ```
+
+- /api/endpoint/[id]
+
+```bash
+curl -X 'POST' 'http://127.0.0.1:3000/api/endpoint/2dafcb4800ec144356799d5f4da07f32' \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt": "it is very rainy outside"}'
+```
