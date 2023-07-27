@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
     "@types/node": "20.4.4",
     "@types/react-dom": "18.2.7",
     "@uiw/react-textarea-code-editor": "^2.1.7",
